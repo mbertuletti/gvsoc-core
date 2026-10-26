@@ -61,6 +61,9 @@ ExecInOrder::ExecInOrder(Iss &iss)
     this->halted.set(false);
 
     this->current_insn = 0;
+    // The instruction cache may acknowledge a flush when it is reset, before the core is: this
+    // must not be taken for the acknowledge of a flush the core requested
+    this->cache_sync = false;
 
     this->iss.traces.new_trace_event_string("label", &this->asm_trace_event);
 }
